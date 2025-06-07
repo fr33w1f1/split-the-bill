@@ -1,0 +1,73 @@
+body {
+    font-family: 'Gill Sans', Calibri, Trebuchet MS, sans-serif;
+    padding: 1rem;
+    max-width: 480px;
+    margin: auto;
+  }
+  
+  h1, h2 {
+    text-align: center;
+  }
+  
+  label {
+    display: block;
+    margin-top: 1rem;
+  }
+  
+  input[type=text], input[type=number], select {
+    width: 100%;
+    padding: 0.4rem;
+    margin-top: 0.3rem;
+    box-sizing: border-box;
+  }
+  
+  button {
+    margin-top: 0.7rem;
+    padding: 0.5rem 1rem;
+  }
+  
+  .member-btn {
+    margin: 0.2rem 0.2rem 0.2rem 0;
+    padding: 0.3rem 0.6rem;
+    cursor: pointer;
+    border: 1px solid #333;
+    border-radius: 4px;
+  }
+  
+  .member-btn.selected {
+    background-color: #4caf50;
+    color: white;
+  }
+  
+  ul {
+    padding-left: 1.2rem;
+  }
+  
+  .item-list {
+    margin-top: 1rem;
+    border-top: 1px solid #ccc;
+    padding-top: 1rem;
+  }
+
+#items-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1em;
+}
+
+#items-table th,
+#items-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+#items-table th {
+  background-color: #f4f4f4;
+}
+
+#items-table button {
+  padding: 4px 8px;
+  cursor: pointer;
+}
+      
