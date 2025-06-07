@@ -29,6 +29,10 @@ class BillCreate(BaseModel):
 class RemoveItem(BaseModel):
     index: int
 
+class AddItemRequest(BaseModel):
+    item_data: Item
+    index: Optional[int] = None
+
 # In-memory "database"
 bills = {}
 
@@ -43,10 +47,11 @@ def create_bill(data: BillCreate):
     return {"bill_id": bill_id}
 
 @app.post("/bill/{bill_id}/add_item")
-def add_item(bill_id: str, item: Item):
+def add_item(bill_id: str,  request: AddItemRequest):
     if bill_id not in bills:
         raise HTTPException(404, "Bill not found")
     bill = bills[bill_id]
+    item = request.item_data
 
     if item.paid_by not in bill["members"]:
         raise HTTPException(400, "payer must be a member")
@@ -54,7 +59,14 @@ def add_item(bill_id: str, item: Item):
         if m not in bill["members"]:
             raise HTTPException(400, f"split member {m} not in members")
 
-    bill["items"].append(item.dict())
+    # This is the key logic change
+    if request.index is not None:
+        # If an index is provided, insert the item there
+        bill["items"].insert(request.index, item.dict())
+    else:
+        # Otherwise, append it to the end (for new items)
+        bill["items"].append(item.dict())
+
     return {"success": True}
 
 @app.post("/bill/{bill_id}/remove_item")

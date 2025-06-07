@@ -116,17 +116,24 @@ function addItem() {
     const itemData = { name, cost, paid_by, split_with, paid_date };
   
     const doAdd = () => {
-      fetch(`${backendURL}/bill/${billId}/add_item`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(itemData)
-      }).then(res => {
-        if (!res.ok) throw new Error("Failed to add item");
-        return res.json();
-      }).then(() => {
-        resetForm();
-        refreshSummary();
-      }).catch(e => alert(e));
+        const payload = {
+            item_data: itemData,
+            // If we are adding a brand new item, index is null.
+            // If we are saving an edit, index will be the original position.
+            index: editIndex 
+          };
+          
+        fetch(`${backendURL}/bill/${billId}/add_item`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        }).then(res => {
+            if (!res.ok) throw new Error("Failed to add item");
+            return res.json();
+        }).then(() => {
+            resetForm();
+            refreshSummary();
+        }).catch(e => alert(e));
     };
   
     if (editIndex !== null) {
